@@ -1,10 +1,30 @@
-// Demo catalogue: names, descriptions, colors, and imagery are illustrative.
-// Replace these objects with your own product data once available.
+// Apparel catalogue supplied by the site owner. Product photographs are AI-generated mockups, not factory product photography.
+// Fabric composition for kids hoodies/sweatshirts and cotton weight are pending confirmation.
 export const categories = [
-  { name: 'T-Shirts', count: 'Everyday staples', image: '/images/essential-tee.svg', color: '#dbd0bf' },
-  { name: 'Shirts & Polos', count: 'Easy refinement', image: '/images/everyday-polo.svg', color: '#d6d4c4' },
-  { name: 'Sweatshirts', count: 'Comfort, considered', image: '/images/relaxed-hoodie.svg', color: '#d7baa5' },
-  { name: 'Outerwear', count: 'The finishing layer', image: '/images/utility-jacket.svg', color: '#ccd0bf' },
+  {
+    "name": "Men's Winter",
+    "count": "5 winter essentials",
+    "image": "/images/products/pullover-hoodies.webp",
+    "color": "#d9c1af"
+  },
+  {
+    "name": "Men's Cotton",
+    "count": "4 cotton styles",
+    "image": "/images/products/mens-cotton-tshirts.webp",
+    "color": "#d1c0b1"
+  },
+  {
+    "name": "Men's Activewear",
+    "count": "2 performance styles",
+    "image": "/images/products/dryfit-tshirts.webp",
+    "color": "#bdc4c9"
+  },
+  {
+    "name": "Kids' Clothing",
+    "count": "4 young essentials",
+    "image": "/images/products/kids-hoodies.webp",
+    "color": "#c4cfe1"
+  }
 ]
 
 export const fabrics = [
@@ -16,53 +36,440 @@ export const fabrics = [
 
 export const products = [
   {
-    id: 'essential-cotton-tee', name: 'Essential Cotton Tee', category: 'T-Shirts', image: '/images/essential-tee.svg',
-    label: 'The essentials', color: 'Warm stone', colors: ['#a98775', '#f0e7d7', '#3f3936'],
-    description: 'A classic crewneck with a clean silhouette, ready for your own label, colours and finishing touches.',
-    features: ['Clean crewneck shape', 'Multiple colour directions', 'Custom branding options'],
+    "id": "pullover-hoodies",
+    "name": "Pullover Hoodies",
+    "category": "Men's Winter",
+    "image": "/images/products/pullover-hoodies.webp",
+    "fallback": "/images/essential-tee.svg",
+    "label": "Men's Winter",
+    "color": "Sand beige",
+    "colors": [],
+    "description": "Classic pullover hoodie with a roomy kangaroo pocket and comfortable ribbed finishing. A versatile starting point for custom collections.",
+    "fabric": "65% Cotton / 35% Polyester",
+    "specs": {
+      "Fit": "Regular or Oversized",
+      "Neckline": "Hooded",
+      "Pocket": "Front Kangaroo Pocket",
+      "Sleeves": "Full Length",
+      "Cuffs & Hem": "Ribbed cuffs & hem",
+      "Fabric": "65% Cotton / 35% Polyester",
+      "Design": "Solid or Custom Printed",
+      "Colours & Sizes": "Customizable",
+      "Branding": "Private Label Available",
+      "Supply": "Bulk and Wholesale Orders"
+    },
+    "features": [
+      "Regular or Oversized fit",
+      "65% Cotton / 35% Polyester",
+      "Custom colours, printing & private label"
+    ]
   },
   {
-    id: 'everyday-polo', name: 'The Everyday Polo', category: 'Shirts & Polos', image: '/images/everyday-polo.svg',
-    label: 'Refined casual', color: 'Soft olive', colors: ['#7d7d70', '#ede4d3', '#6b4638'],
-    description: 'An easy everyday polo with a considered collar and classic proportions for work or leisure.',
-    features: ['Classic collared profile', 'Versatile everyday style', 'Custom branding options'],
+    "id": "full-zip-hoodies",
+    "name": "Full-Zip Hoodies",
+    "category": "Men's Winter",
+    "image": "/images/products/full-zip-hoodies.webp",
+    "fallback": "/images/essential-tee.svg",
+    "label": "Men's Winter",
+    "color": "Sand beige",
+    "colors": [],
+    "description": "Easy-to-layer zip-front hoodie with a full-length zipper, hood, and split front pockets.",
+    "fabric": "65% Cotton / 35% Polyester",
+    "specs": {
+      "Fit": "Regular or Oversized",
+      "Neckline": "Hooded with full-length zipper",
+      "Pocket": "Split front pockets",
+      "Sleeves": "Full Length",
+      "Cuffs & Hem": "Ribbed cuffs & hem",
+      "Fabric": "65% Cotton / 35% Polyester",
+      "Design": "Solid or Custom Printed",
+      "Colours & Sizes": "Customizable",
+      "Branding": "Private Label Available",
+      "Supply": "Bulk and Wholesale Orders"
+    },
+    "features": [
+      "Regular or Oversized fit",
+      "65% Cotton / 35% Polyester",
+      "Custom colours, printing & private label"
+    ]
   },
   {
-    id: 'relaxed-hoodie', name: 'Relaxed Fit Hoodie', category: 'Sweatshirts', image: '/images/relaxed-hoodie.svg',
-    label: 'Most loved', color: 'Clay', colors: ['#b28a73', '#777e6f', '#d8d0c3'],
-    description: 'Comfort-forward layering with a relaxed shape, roomy hood and timeless styling.',
-    features: ['Relaxed profile', 'Front kangaroo pocket', 'Custom branding options'],
+    "id": "sweatshirts",
+    "name": "Sweatshirts",
+    "category": "Men's Winter",
+    "image": "/images/products/sweatshirts.webp",
+    "fallback": "/images/essential-tee.svg",
+    "label": "Men's Winter",
+    "color": "Sand beige",
+    "colors": [],
+    "description": "Soft classic crewneck sweatshirt with a simple, versatile silhouette and ribbed trims.",
+    "fabric": "65% Cotton / 35% Polyester",
+    "specs": {
+      "Fit": "Regular or Relaxed",
+      "Neckline": "Crew Neck",
+      "Pocket": "No pocket",
+      "Sleeves": "Full Length",
+      "Cuffs & Hem": "Ribbed collar, cuffs & hem",
+      "Fabric": "65% Cotton / 35% Polyester",
+      "Design": "Solid or Custom Printed",
+      "Colours & Sizes": "Customizable",
+      "Branding": "Private Label Available",
+      "Supply": "Bulk and Wholesale Orders"
+    },
+    "features": [
+      "Regular or Relaxed fit",
+      "65% Cotton / 35% Polyester",
+      "Custom colours, printing & private label"
+    ]
   },
   {
-    id: 'linen-blend-shirt', name: 'Linen Blend Shirt', category: 'Shirts & Polos', image: '/images/linen-shirt.svg',
-    label: 'Easy refinement', color: 'Natural sand', colors: ['#dbcfb8', '#9daba2', '#e9e2d7'],
-    description: 'A light, effortless button-down aesthetic with a natural look for warm-weather collections.',
-    features: ['Button-front styling', 'Relaxed, breathable feel', 'Custom branding options'],
+    "id": "half-zip-sweatshirts",
+    "name": "Half-Zip Sweatshirts",
+    "category": "Men's Winter",
+    "image": "/images/products/half-zip-sweatshirts.webp",
+    "fallback": "/images/essential-tee.svg",
+    "label": "Men's Winter",
+    "color": "Sand beige",
+    "colors": [],
+    "description": "A neat stand-collar sweatshirt with a short front zipper and an easy everyday fit.",
+    "fabric": "65% Cotton / 35% Polyester",
+    "specs": {
+      "Fit": "Regular or Relaxed",
+      "Neckline": "Stand Collar with Half Zip",
+      "Pocket": "No pocket",
+      "Sleeves": "Full Length",
+      "Cuffs & Hem": "Ribbed cuffs & hem",
+      "Fabric": "65% Cotton / 35% Polyester",
+      "Design": "Solid or Custom Printed",
+      "Colours & Sizes": "Customizable",
+      "Branding": "Private Label Available",
+      "Supply": "Bulk and Wholesale Orders"
+    },
+    "features": [
+      "Regular or Relaxed fit",
+      "65% Cotton / 35% Polyester",
+      "Custom colours, printing & private label"
+    ]
   },
   {
-    id: 'signature-crewneck', name: 'Signature Crewneck', category: 'Sweatshirts', image: '/images/crewneck.svg',
-    label: 'Layering staple', color: 'Mushroom', colors: ['#8c867b', '#d1bbaa', '#565b50'],
-    description: 'A straightforward crewneck silhouette designed as a foundation for everyday collections.',
-    features: ['Classic round neck', 'Ribbed finishing', 'Custom branding options'],
+    "id": "jogger-pants",
+    "name": "Jogger Pants",
+    "category": "Men's Winter",
+    "image": "/images/products/jogger-pants.webp",
+    "fallback": "/images/essential-tee.svg",
+    "label": "Men's Winter",
+    "color": "Sand beige",
+    "colors": [],
+    "description": "Tapered everyday joggers with a drawstring elastic waist, side pockets, and ribbed ankle cuffs.",
+    "fabric": "65% Cotton / 35% Polyester",
+    "specs": {
+      "Fit": "Regular or Relaxed",
+      "Neckline": "Elastic drawstring waist",
+      "Pocket": "Side pockets",
+      "Sleeves": "Full Length Legs",
+      "Cuffs & Hem": "Ribbed ankle cuffs",
+      "Fabric": "65% Cotton / 35% Polyester",
+      "Design": "Solid or Custom Printed",
+      "Colours & Sizes": "Customizable",
+      "Branding": "Private Label Available",
+      "Supply": "Bulk and Wholesale Orders"
+    },
+    "features": [
+      "Regular or Relaxed fit",
+      "65% Cotton / 35% Polyester",
+      "Custom colours, printing & private label"
+    ]
   },
   {
-    id: 'utility-overshirt', name: 'Utility Overshirt', category: 'Outerwear', image: '/images/overshirt.svg',
-    label: 'New direction', color: 'Burnt sienna', colors: ['#9f6c52', '#958e7b', '#ddd0bd'],
-    description: 'A casual layering piece with structured details and a warm, workwear-inspired attitude.',
-    features: ['Button-front shape', 'Utility-inspired pockets', 'Custom branding options'],
+    "id": "mens-cotton-tshirts",
+    "name": "Men's Cotton T-Shirts",
+    "category": "Men's Cotton",
+    "image": "/images/products/mens-cotton-tshirts.webp",
+    "fallback": "/images/essential-tee.svg",
+    "label": "Men's Cotton",
+    "color": "Sand beige",
+    "colors": [],
+    "description": "Everyday cotton crewneck T-shirt with a clean silhouette ready for print or private-label branding.",
+    "fabric": "Cotton",
+    "specs": {
+      "Fit": "Regular or Oversized",
+      "Neckline": "Crew Neck",
+      "Pocket": "No pocket",
+      "Sleeves": "Short Sleeves",
+      "Cuffs & Hem": "Stitched sleeve & bottom hems",
+      "Fabric": "Cotton",
+      "Design": "Solid or Custom Printed",
+      "Colours & Sizes": "Customizable",
+      "Branding": "Private Label Available",
+      "Supply": "Bulk and Wholesale Orders"
+    },
+    "features": [
+      "Regular or Oversized fit",
+      "Cotton",
+      "Custom colours, printing & private label"
+    ]
   },
   {
-    id: 'everyday-twill-trouser', name: 'Everyday Twill Trouser', category: 'Bottoms', image: '/images/twill-trouser.svg',
-    label: 'Easy essentials', color: 'Charcoal taupe', colors: ['#776e61', '#c2ab8d', '#363a37'],
-    description: 'An unfussy everyday trouser direction with a considered shape and a clean finish.',
-    features: ['Everyday silhouette', 'Relaxed styling', 'Custom branding options'],
+    "id": "mens-polo-tshirts",
+    "name": "Men's Polo T-Shirts",
+    "category": "Men's Cotton",
+    "image": "/images/products/mens-polo-tshirts.webp",
+    "fallback": "/images/essential-tee.svg",
+    "label": "Men's Cotton",
+    "color": "Sand beige",
+    "colors": [],
+    "description": "Smart-casual collared polo shirt with a button placket and classic shape.",
+    "fabric": "Cotton",
+    "specs": {
+      "Fit": "Regular",
+      "Neckline": "Polo Collar with Button Placket",
+      "Pocket": "No pocket",
+      "Sleeves": "Short Sleeves",
+      "Cuffs & Hem": "Finished cuffs & straight hem",
+      "Fabric": "Cotton",
+      "Design": "Solid or Custom Printed",
+      "Colours & Sizes": "Customizable",
+      "Branding": "Private Label Available",
+      "Supply": "Bulk and Wholesale Orders"
+    },
+    "features": [
+      "Regular fit",
+      "Cotton",
+      "Custom colours, printing & private label"
+    ]
   },
   {
-    id: 'utility-jacket', name: 'The Utility Jacket', category: 'Outerwear', image: '/images/utility-jacket.svg',
-    label: 'Statement layers', color: 'Sage grey', colors: ['#a7aaa0', '#6d675e', '#d3b29e'],
-    description: 'An easy outer layer with practical lines, made to bring character to a curated range.',
-    features: ['Versatile layering fit', 'Practical front pockets', 'Custom branding options'],
+    "id": "heavyweight-tshirts",
+    "name": "Heavyweight T-Shirts",
+    "category": "Men's Cotton",
+    "image": "/images/products/heavyweight-tshirts.webp",
+    "fallback": "/images/essential-tee.svg",
+    "label": "Men's Cotton",
+    "color": "Charcoal",
+    "colors": [],
+    "description": "A substantial cotton T-shirt with structured shape, thicker collar and relaxed proportions.",
+    "fabric": "Cotton (weight to be confirmed)",
+    "specs": {
+      "Fit": "Relaxed or Oversized",
+      "Neckline": "Crew Neck",
+      "Pocket": "No pocket",
+      "Sleeves": "Short Sleeves",
+      "Cuffs & Hem": "Reinforced collar & stitched hems",
+      "Fabric": "Cotton (weight to be confirmed)",
+      "Design": "Solid or Custom Printed",
+      "Colours & Sizes": "Customizable",
+      "Branding": "Private Label Available",
+      "Supply": "Bulk and Wholesale Orders"
+    },
+    "features": [
+      "Relaxed or Oversized fit",
+      "Cotton (weight to be confirmed)",
+      "Custom colours, printing & private label"
+    ]
   },
+  {
+    "id": "crop-tshirts",
+    "name": "Crop T-Shirts",
+    "category": "Men's Cotton",
+    "image": "/images/products/crop-tshirts.webp",
+    "fallback": "/images/essential-tee.svg",
+    "label": "Men's Cotton",
+    "color": "Dusty rose",
+    "colors": [],
+    "description": "Boxy cropped T-shirt with a modern short hem and roomy sleeves.",
+    "fabric": "Cotton",
+    "specs": {
+      "Fit": "Relaxed / Boxy Crop",
+      "Neckline": "Crew Neck",
+      "Pocket": "No pocket",
+      "Sleeves": "Short Sleeves",
+      "Cuffs & Hem": "Double-stitched cropped hem",
+      "Fabric": "Cotton",
+      "Design": "Solid or Custom Printed",
+      "Colours & Sizes": "Customizable",
+      "Branding": "Private Label Available",
+      "Supply": "Bulk and Wholesale Orders"
+    },
+    "features": [
+      "Relaxed / Boxy Crop fit",
+      "Cotton",
+      "Custom colours, printing & private label"
+    ]
+  },
+  {
+    "id": "dryfit-tshirts",
+    "name": "Dry-Fit T-Shirts",
+    "category": "Men's Activewear",
+    "image": "/images/products/dryfit-tshirts.webp",
+    "fallback": "/images/essential-tee.svg",
+    "label": "Men's Activewear",
+    "color": "Navy blue",
+    "colors": [],
+    "description": "Lightweight performance T-shirt with an athletic shape and smooth moisture-managing polyester fabric.",
+    "fabric": "100% Polyester",
+    "specs": {
+      "Fit": "Regular or Athletic",
+      "Neckline": "Crew Neck",
+      "Pocket": "No pocket",
+      "Sleeves": "Short Sleeves",
+      "Cuffs & Hem": "Stitched sleeve & bottom hems",
+      "Fabric": "100% Polyester",
+      "Design": "Solid or Custom Printed",
+      "Colours & Sizes": "Customizable",
+      "Branding": "Private Label Available",
+      "Supply": "Bulk and Wholesale Orders"
+    },
+    "features": [
+      "Regular or Athletic fit",
+      "100% Polyester",
+      "Custom colours, printing & private label"
+    ]
+  },
+  {
+    "id": "longsleeve-dryfit-tshirts",
+    "name": "Long-Sleeve Dry-Fit T-Shirts",
+    "category": "Men's Activewear",
+    "image": "/images/products/longsleeve-dryfit-tshirts.webp",
+    "fallback": "/images/essential-tee.svg",
+    "label": "Men's Activewear",
+    "color": "Navy blue",
+    "colors": [],
+    "description": "Long-sleeve performance tee with smooth lightweight fabric and an easy active fit.",
+    "fabric": "100% Polyester",
+    "specs": {
+      "Fit": "Regular or Athletic",
+      "Neckline": "Crew Neck",
+      "Pocket": "No pocket",
+      "Sleeves": "Full Length",
+      "Cuffs & Hem": "Finished cuffs & bottom hem",
+      "Fabric": "100% Polyester",
+      "Design": "Solid or Custom Printed",
+      "Colours & Sizes": "Customizable",
+      "Branding": "Private Label Available",
+      "Supply": "Bulk and Wholesale Orders"
+    },
+    "features": [
+      "Regular or Athletic fit",
+      "100% Polyester",
+      "Custom colours, printing & private label"
+    ]
+  },
+  {
+    "id": "kids-hoodies",
+    "name": "Kids' Hoodies",
+    "category": "Kids' Clothing",
+    "image": "/images/products/kids-hoodies.webp",
+    "fallback": "/images/essential-tee.svg",
+    "label": "Kids' Clothing",
+    "color": "Sky blue",
+    "colors": [],
+    "description": "Cosy, child-sized pullover hoodie with a front kangaroo pocket and ribbed cuffs and hem.",
+    "fabric": "To be confirmed",
+    "specs": {
+      "Fit": "Regular or Relaxed",
+      "Neckline": "Hooded",
+      "Pocket": "Front Kangaroo Pocket",
+      "Sleeves": "Full Length",
+      "Cuffs & Hem": "Ribbed cuffs & hem",
+      "Fabric": "To be confirmed",
+      "Design": "Solid or Custom Printed",
+      "Colours & Sizes": "Customizable",
+      "Branding": "Private Label Available",
+      "Supply": "Bulk and Wholesale Orders"
+    },
+    "features": [
+      "Regular or Relaxed fit",
+      "To be confirmed",
+      "Custom colours, printing & private label"
+    ]
+  },
+  {
+    "id": "kids-sweatshirts",
+    "name": "Kids' Sweatshirts",
+    "category": "Kids' Clothing",
+    "image": "/images/products/kids-sweatshirts.webp",
+    "fallback": "/images/essential-tee.svg",
+    "label": "Kids' Clothing",
+    "color": "Sky blue",
+    "colors": [],
+    "description": "Easy everyday kids crewneck sweatshirt with cosy styling and neat ribbed finishing.",
+    "fabric": "To be confirmed",
+    "specs": {
+      "Fit": "Regular or Relaxed",
+      "Neckline": "Crew Neck",
+      "Pocket": "No pocket",
+      "Sleeves": "Full Length",
+      "Cuffs & Hem": "Ribbed collar, cuffs & hem",
+      "Fabric": "To be confirmed",
+      "Design": "Solid or Custom Printed",
+      "Colours & Sizes": "Customizable",
+      "Branding": "Private Label Available",
+      "Supply": "Bulk and Wholesale Orders"
+    },
+    "features": [
+      "Regular or Relaxed fit",
+      "To be confirmed",
+      "Custom colours, printing & private label"
+    ]
+  },
+  {
+    "id": "kids-cotton-tshirts",
+    "name": "Kids' Cotton T-Shirts",
+    "category": "Kids' Clothing",
+    "image": "/images/products/kids-cotton-tshirts.webp",
+    "fallback": "/images/essential-tee.svg",
+    "label": "Kids' Clothing",
+    "color": "Lavender",
+    "colors": [],
+    "description": "Soft everyday cotton T-shirt with a simple crewneck shape for younger wearers.",
+    "fabric": "Cotton",
+    "specs": {
+      "Fit": "Regular",
+      "Neckline": "Crew Neck",
+      "Pocket": "No pocket",
+      "Sleeves": "Short Sleeves",
+      "Cuffs & Hem": "Stitched sleeve & bottom hems",
+      "Fabric": "Cotton",
+      "Design": "Solid or Custom Printed",
+      "Colours & Sizes": "Customizable",
+      "Branding": "Private Label Available",
+      "Supply": "Bulk and Wholesale Orders"
+    },
+    "features": [
+      "Regular fit",
+      "Cotton",
+      "Custom colours, printing & private label"
+    ]
+  },
+  {
+    "id": "kids-polyester-tshirts",
+    "name": "Kids' Polyester T-Shirts",
+    "category": "Kids' Clothing",
+    "image": "/images/products/kids-polyester-tshirts.webp",
+    "fallback": "/images/essential-tee.svg",
+    "label": "Kids' Clothing",
+    "color": "Navy blue",
+    "colors": [],
+    "description": "Lightweight polyester kids T-shirt suitable for activity-inspired collections.",
+    "fabric": "100% Polyester",
+    "specs": {
+      "Fit": "Regular",
+      "Neckline": "Crew Neck",
+      "Pocket": "No pocket",
+      "Sleeves": "Short Sleeves",
+      "Cuffs & Hem": "Finished sleeve & bottom hems",
+      "Fabric": "100% Polyester",
+      "Design": "Solid or Custom Printed",
+      "Colours & Sizes": "Customizable",
+      "Branding": "Private Label Available",
+      "Supply": "Bulk and Wholesale Orders"
+    },
+    "features": [
+      "Regular fit",
+      "100% Polyester",
+      "Custom colours, printing & private label"
+    ]
+  }
 ]
 
 export const processSteps = [

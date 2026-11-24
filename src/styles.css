@@ -107,7 +107,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 @media (max-width: 380px){ .brand-logo{font-size:18px}.brand-mark{font-size:22px}.hero-media{height:375px}.hero-title{font-size:49px}.btn{padding:13px 17px;font-size:11px}.category-card h3{font-size:20px} .product-card .font-display{font-size:19px} }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:.01ms !important; animation-duration:.01ms !important} }
 
-/* Real supplier product photography edition */
+/* Original product mockup presentation */
 .product-visual { background: #eee8df; }
 .category-card { background: #b6a38e; }
 .hero-img-main { background:#d1bdaa; }
@@ -116,7 +116,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .product-card .product-tag { letter-spacing:.06em; }
 .product-card a:focus-visible, .filter-chip:focus-visible { outline: 2px solid #a65a40; outline-offset: 3px; }
 
-/* Matching supplier product photography and gallery UX */
+/* Product photography and gallery UX */
 .product-visual { background: #f7f4ef; }
 .category-card { background: #e9dfd4; }
 .detail-image { background: #f8f5ef; }
@@ -129,3 +129,17 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .photo-caption { font-size:11px; color:var(--muted); margin-top:11px; line-height:1.7; }
 .photo-caption a { color:var(--accent); text-decoration:underline; text-underline-offset:2px; }
 @media (max-width: 600px) { .photo-thumb { width:82px; height:100px; } .photo-thumb img { height:67px; } }
+
+/* Owner catalogue / product specification refinements */
+.product-visual { background:#f3efe9; }
+.product-visual img { mix-blend-mode:multiply; }
+.category-card img { mix-blend-mode:multiply; }
+.detail-image img { mix-blend-mode:multiply; }
+.spec-table { border-top:1px solid var(--line); }
+.spec-row { display:grid; grid-template-columns:minmax(105px,35%) 1fr; gap:15px; border-bottom:1px solid var(--line); padding:13px 0; font-size:13px; line-height:1.5; }
+.spec-row dt { color:var(--ink); font-weight:700; }
+.spec-row dd { color:var(--muted); margin:0; }
+.mini-spec { font-size:10px; background:#efe6dc; color:#725445; padding:5px 8px; border-radius:4px; }
+.product-card { padding-bottom:4px; }
+.product-card .line-clamp-2 { display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; overflow:hidden; }
+@media(max-width:580px) { .spec-row{grid-template-columns:110px 1fr;font-size:12px} .mini-spec{font-size:9px} }

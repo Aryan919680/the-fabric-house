@@ -85,7 +85,7 @@ function GarmentImage({ item, className='', loading='lazy' }) {
   const alternates = (productPhotos[item.id] || []).map(photo => photo.src)
   const candidates = [...new Set([item.image, ...alternates]), item.fallback || '/images/essential-tee.svg']
   const source = candidates[Math.min(attempt, candidates.length - 1)]
-  return <img loading={loading} src={asset(source)} alt={`${item.name} — ${item.color || "sample colour"} — garment illustration`} className={className} referrerPolicy="no-referrer" onError={() => setAttempt(current => Math.min(current + 1, candidates.length - 1))} />
+  return <img loading={loading} src={asset(source)} alt={`${item.name} product mockup, ${item.color || "illustrative colour"}`} className={className} referrerPolicy="no-referrer" onError={() => setAttempt(current => Math.min(current + 1, candidates.length - 1))} />
 }
 
 function ProductGallery({ item }) {
@@ -105,7 +105,7 @@ function ProductGallery({ item }) {
         <span>{photo.label}</span>
       </button>)}
     </div>}
-    <p className="photo-caption">Illustrative clothing design · Replace with your own product photography when available</p>
+    <p className="photo-caption">AI-generated product mockup · Colours and finished specifications should be confirmed before ordering</p>
   </div>
 }
 
@@ -122,7 +122,7 @@ function ProductCard({ item, favorites, toggleFavorite, openEnquiry }) {
         <button className="product-quick" onClick={() => openEnquiry(item.name)}>Enquire about this style <ArrowUpRight size={16}/></button>
       </div>
       <div className="flex items-start justify-between gap-2 pt-4">
-        <div><a href={`#/products/${item.id}`} className="font-display text-[23px] leading-tight hover:text-[#aa5a3c]">{item.name}</a><p className="mt-1 text-[12px] text-[var(--muted)]">{item.category}</p></div>
+        <div><a href={`#/products/${item.id}`} className="font-display text-[23px] leading-tight hover:text-[#aa5a3c]">{item.name}</a><p className="mt-1 text-[12px] text-[var(--muted)]">{item.category}</p><p className="mt-2 line-clamp-2 text-[12px] leading-5 text-[var(--muted)]">{item.description}</p><div className="mt-3 flex flex-wrap gap-2"><span className="mini-spec">{item.fabric}</span><span className="mini-spec">{item.specs.Fit}</span></div></div>
         <a href={`#/products/${item.id}`} aria-label={`View ${item.name}`} className="mt-1 text-[var(--accent)]"><ArrowUpRight size={19}/></a>
       </div>
     </article>
@@ -143,8 +143,8 @@ function Home({ favorites, toggleFavorite, openEnquiry }) {
         <div className="hero-signoff"><span className="font-display text-[29px] italic">Made with intention.</span><span className="h-px w-10 bg-[#bca999]"/><span>Designed around your ideas.</span></div>
       </div>
       <div className="hero-media">
-        <div className="hero-img-main"><GarmentImage item={products[6]} className="w-full h-full object-contain p-3" loading="eager" /></div>
-        <div className="hero-img-side"><GarmentImage item={products[1]} className="w-full h-full object-cover" loading="eager" /></div>
+        <div className="hero-img-main"><GarmentImage item={products[0]} className="w-full h-full object-contain p-3" loading="eager" /></div>
+        <div className="hero-img-side"><GarmentImage item={products[5]} className="w-full h-full object-contain p-3" loading="eager" /></div>
         <div className="round-stamp"><span>FABRIC<br/>✳<br/>STORY</span></div>
         <div className="hero-vertical">THE FABRIC HOUSE — THE APPAREL EDIT</div>
         <div className="hero-img-caption">01 / CONSIDERED APPAREL</div>
@@ -153,12 +153,12 @@ function Home({ favorites, toggleFavorite, openEnquiry }) {
 
     <section className="page-wrap"><div className="service-strip">
       <div><Leaf size={22} strokeWidth={1.5}/><span>Material-first thinking</span></div>
-      <div><Shirt size={22} strokeWidth={1.5}/><span>Clothing made for your label</span></div>
+      <div><Shirt size={22} strokeWidth={1.5}/><span>Custom colours & private label</span></div>
       <div><Sparkles size={22} strokeWidth={1.5}/><span>Details that feel like you</span></div>
     </div></section>
 
     <section className="section-pad page-wrap" id="collection">
-      <SectionIntro kicker="01 / DISCOVER OUR RANGE" title="Styles made to be" emphasis="your own." desc="Modern essentials and considered layers, ready to inspire your next collection." action="Explore every style" href="/collections"/>
+      <SectionIntro kicker="01 / DISCOVER OUR RANGE" title="Styles made to be" emphasis="your own." desc="15 customizable apparel styles for men and kids — from winter staples to activewear." action="Explore every style" href="/collections"/>
       <div className="mt-9 grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">
         {categories.map((cat, i) => <a key={cat.name} className="category-card group" href={`#/collections?category=${encodeURIComponent(cat.name)}`}>
           <GarmentImage item={cat} className="h-full w-full object-contain p-4 transition-transform duration-700 group-hover:scale-105" />
@@ -181,7 +181,7 @@ function Home({ favorites, toggleFavorite, openEnquiry }) {
     </section>
 
     <section className="section-pad page-wrap">
-      <SectionIntro kicker="03 / THE APPAREL EDIT" title="A few of our" emphasis="favourites." desc="Discover considered shapes and everyday staples — a starting point for whatever you imagine." action="View full collection" href="/collections"/>
+      <SectionIntro kicker="03 / THE APPAREL EDIT" title="A few of our" emphasis="favourites." desc="Browse real collection categories with our original studio-style product mockups." action="View full collection" href="/collections"/>
       <div className="mt-9 grid grid-cols-2 gap-x-3 gap-y-9 md:grid-cols-4 md:gap-x-5">{products.slice(0,4).map(item => <ProductCard key={item.id} item={item} favorites={favorites} toggleFavorite={toggleFavorite} openEnquiry={openEnquiry}/>)}</div>
     </section>
 
@@ -209,18 +209,18 @@ function Collections({ favorites, toggleFavorite, openEnquiry, route }) {
   useEffect(() => { setCategory(initialCat); setSearch(initialSearch) }, [initialCat, initialSearch])
   const allCats = ['All styles', ...new Set(products.map(p => p.category))]
   const matches = useMemo(() => {
-    let r = products.filter(p => (category === 'All styles' || p.category === category) && `${p.name} ${p.category} ${p.color}`.toLowerCase().includes(search.toLowerCase()))
+    let r = products.filter(p => (category === 'All styles' || p.category === category) && `${p.name} ${p.category} ${p.color} ${p.fabric} ${p.description}`.toLowerCase().includes(search.toLowerCase()))
     if (sort === 'az') r = [...r].sort((a,b) => a.name.localeCompare(b.name))
     return r
   }, [search, category, sort])
   return <>
-    <div className="page-wrap page-heading"><p className="eyebrow mb-4">OUR CLOTHING COLLECTION</p><h1 className="page-title">Made for your <em>next idea.</em></h1><p className="copy mt-5 max-w-2xl">From everyday essentials to easy layering pieces, explore the clothing ideas that could shape your brand.</p></div>
+    <div className="page-wrap page-heading"><p className="eyebrow mb-4">OUR CLOTHING COLLECTION</p><h1 className="page-title">Made for your <em>next idea.</em></h1><p className="copy mt-5 max-w-2xl">Explore 15 clothing styles across men’s winterwear, cotton essentials, activewear and kids’ clothing — with custom branding and wholesale enquiries.</p></div>
     <section className="page-wrap pb-24">
       <div className="catalog-controls">
         <div className="flex flex-wrap gap-2">{allCats.map(cat => <button key={cat} onClick={() => setCategory(cat)} className={`filter-chip ${category===cat ? 'selected' : ''}`}>{cat}</button>)}</div>
         <div className="flex flex-wrap gap-3"><label className="search-field"><Search size={17}/><input aria-label="Search styles" value={search} onChange={e => setSearch(e.target.value)} placeholder="Search styles..." /></label><label className="sort-field"><span className="sr-only">Sort catalogue</span><select value={sort} onChange={e => setSort(e.target.value)}><option value="featured">Featured</option><option value="az">Name A–Z</option></select><ChevronDown size={16}/></label></div>
       </div>
-      <div className="mb-5 text-xs text-[var(--muted)]">Showing {matches.length} of {products.length} sample styles</div>
+      <div className="mb-5 text-xs text-[var(--muted)]">Showing {matches.length} of {products.length} clothing styles</div>
       {matches.length ? <div className="grid grid-cols-2 gap-x-3 gap-y-9 md:grid-cols-3 lg:grid-cols-4 md:gap-x-5">{matches.map(item=><ProductCard key={item.id} item={item} favorites={favorites} toggleFavorite={toggleFavorite} openEnquiry={openEnquiry}/>)}</div> : <div className="py-24 text-center"><Search size={34} className="mx-auto mb-4 text-[var(--accent)]"/><h3 className="font-display text-3xl">No matching styles found.</h3><p className="copy my-4">Try a different word or browse all styles.</p><Button onClick={()=>{setSearch('');setCategory('All styles')}}>Reset filters <ArrowRight size={16}/></Button></div>}
     </section>
     <LargeCta openEnquiry={openEnquiry}/>
@@ -235,8 +235,10 @@ function ProductDetail({ item, openEnquiry, toggleFavorite, favorites }) {
       <div className="grid gap-8 lg:grid-cols-[1.08fr_.92fr] lg:gap-16">
         <ProductGallery item={item} />
         <div className="py-3 lg:py-10"><p className="eyebrow mb-4">THE FABRIC HOUSE / {item.category.toUpperCase()}</p><h1 className="page-title !text-[clamp(44px,4.6vw,68px)]">{item.name}</h1><p className="mt-5 max-w-xl text-[15px] leading-8 text-[var(--muted)]">{item.description}</p><div className="my-8 h-px bg-[var(--line)]"/>
-          <p className="font-semibold text-sm">Illustrated colour: <span className="font-normal text-[var(--muted)]">{item.color}</span></p><p className="mt-2 text-xs text-[var(--muted)]">Colours and features shown are examples; replace with your own specifications when ready.</p>
-          <p className="mt-8 font-semibold text-sm">Design highlights</p><ul className="mt-4 space-y-3">{item.features.map(f=><li key={f} className="flex items-center gap-3 text-sm text-[var(--muted)]"><Check size={17} className="text-[var(--accent)]"/>{f}</li>)}</ul>
+          <p className="font-semibold text-sm">Shown colour: <span className="font-normal text-[var(--muted)]">{item.color}</span></p><p className="mt-2 text-xs text-[var(--muted)]">Illustrative imagery only. Colours, sizes, branding and final product specifications are confirmed as part of an enquiry.</p>
+          <p className="mt-8 mb-4 font-display text-[26px]">Product specifications</p>
+          <dl className="spec-table">{Object.entries(item.specs).map(([key,value])=><div key={key} className="spec-row"><dt>{key}</dt><dd>{value}</dd></div>)}</dl>
+          <p className="mt-4 text-xs leading-6 text-[var(--muted)]">All photos are AI-generated product mockups. Final colours, fabric and garment details are subject to confirmation when enquiring.</p>
           <div className="mt-9 flex flex-wrap gap-3"><Button onClick={()=>openEnquiry(item.name)}>Enquire about this style <ArrowUpRight size={17}/></Button><button onClick={()=>toggleFavorite(item.id)} className="btn btn-outline" aria-pressed={favorites.includes(item.id)}><Heart size={17} fill={favorites.includes(item.id)?'currentColor':'none'}/>{favorites.includes(item.id)?'Saved':'Save style'}</button></div>
         </div>
       </div>
