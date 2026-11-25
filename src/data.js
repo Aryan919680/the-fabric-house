@@ -1,28 +1,41 @@
+import { COLOUR_OPTIONS, variantsFor } from './colorVariants'
 // Apparel catalogue supplied by the site owner. Product photographs are AI-generated mockups, not factory product photography.
 // Fabric composition for kids hoodies/sweatshirts and cotton weight are pending confirmation.
 export const categories = [
   {
     "name": "Men's Winter",
-    "count": "5 winter essentials",
-    "image": "/images/products/pullover-hoodies.webp",
+    "count": "6 winter essentials",
+    "image": "/images/products/variants/pullover-hoodies-cream.webp",
     "color": "#d9c1af"
   },
   {
     "name": "Men's Cotton",
-    "count": "4 cotton styles",
-    "image": "/images/products/mens-cotton-tshirts.webp",
+    "count": "3 cotton styles",
+    "image": "/images/products/variants/mens-cotton-tshirts-cream.webp",
     "color": "#d1c0b1"
   },
   {
     "name": "Men's Activewear",
     "count": "2 performance styles",
-    "image": "/images/products/dryfit-tshirts.webp",
+    "image": "/images/products/variants/dryfit-tshirts-cream.webp",
     "color": "#bdc4c9"
+  },
+  {
+    "name": "Women's Winter",
+    "count": "4 wardrobe layers",
+    "image": "/images/products/variants/womens-pullover-hoodies-cream.webp",
+    "color": "#d9c1af"
+  },
+  {
+    "name": "Women's Cotton",
+    "count": "1 crop essential",
+    "image": "/images/products/variants/womens-crop-tshirts-cream.webp",
+    "color": "#bfa69b"
   },
   {
     "name": "Kids' Clothing",
     "count": "4 young essentials",
-    "image": "/images/products/kids-hoodies.webp",
+    "image": "/images/products/variants/kids-hoodies-cream.webp",
     "color": "#c4cfe1"
   }
 ]
@@ -39,7 +52,7 @@ export const products = [
     "id": "pullover-hoodies",
     "name": "Pullover Hoodies",
     "category": "Men's Winter",
-    "image": "/images/products/pullover-hoodies.webp",
+    "image": "/images/products/variants/pullover-hoodies-cream.webp",
     "fallback": "/images/essential-tee.svg",
     "label": "Men's Winter",
     "color": "Sand beige",
@@ -68,7 +81,7 @@ export const products = [
     "id": "full-zip-hoodies",
     "name": "Full-Zip Hoodies",
     "category": "Men's Winter",
-    "image": "/images/products/full-zip-hoodies.webp",
+    "image": "/images/products/variants/full-zip-hoodies-cream.webp",
     "fallback": "/images/essential-tee.svg",
     "label": "Men's Winter",
     "color": "Sand beige",
@@ -97,7 +110,7 @@ export const products = [
     "id": "sweatshirts",
     "name": "Sweatshirts",
     "category": "Men's Winter",
-    "image": "/images/products/sweatshirts.webp",
+    "image": "/images/products/variants/sweatshirts-cream.webp",
     "fallback": "/images/essential-tee.svg",
     "label": "Men's Winter",
     "color": "Sand beige",
@@ -126,7 +139,7 @@ export const products = [
     "id": "half-zip-sweatshirts",
     "name": "Half-Zip Sweatshirts",
     "category": "Men's Winter",
-    "image": "/images/products/half-zip-sweatshirts.webp",
+    "image": "/images/products/variants/half-zip-sweatshirts-cream.webp",
     "fallback": "/images/essential-tee.svg",
     "label": "Men's Winter",
     "color": "Sand beige",
@@ -155,7 +168,7 @@ export const products = [
     "id": "jogger-pants",
     "name": "Jogger Pants",
     "category": "Men's Winter",
-    "image": "/images/products/jogger-pants.webp",
+    "image": "/images/products/variants/jogger-pants-cream.webp",
     "fallback": "/images/essential-tee.svg",
     "label": "Men's Winter",
     "color": "Sand beige",
@@ -181,10 +194,39 @@ export const products = [
     ]
   },
   {
+    "id": "straight-fit-pajama",
+    "name": "Men's Straight-Fit Pajama Pants",
+    "category": "Men's Winter",
+    "image": "/images/products/variants/straight-fit-pajama-cream.webp",
+    "fallback": "/images/essential-tee.svg",
+    "label": "Men's Winter",
+    "color": "Cream",
+    "colors": [],
+    "description": "Comfortable straight-leg lounge trousers with an adjustable drawstring waist, side pockets and open hems, designed for everyday wear and private-label collections.",
+    "fabric": "Composition to be confirmed",
+    "specs": {
+      "Fit": "Straight / Relaxed",
+      "Waistband": "Elasticated with adjustable drawstring",
+      "Pockets": "Side pockets",
+      "Leg Length": "Full length",
+      "Hem": "Open straight hem (no ankle cuffs)",
+      "Fabric": "Composition to be confirmed",
+      "Design": "Solid or Custom Printed",
+      "Colours & Sizes": "Customizable",
+      "Branding": "Private Label Available",
+      "Supply": "Bulk and Wholesale Orders"
+    },
+    "features": [
+      "Straight / Relaxed fit",
+      "Elastic drawstring waist & open hems",
+      "Custom colours, printing & private label"
+    ]
+  },
+  {
     "id": "mens-cotton-tshirts",
     "name": "Men's Cotton T-Shirts",
     "category": "Men's Cotton",
-    "image": "/images/products/mens-cotton-tshirts.webp",
+    "image": "/images/products/variants/mens-cotton-tshirts-cream.webp",
     "fallback": "/images/essential-tee.svg",
     "label": "Men's Cotton",
     "color": "Sand beige",
@@ -213,7 +255,7 @@ export const products = [
     "id": "mens-polo-tshirts",
     "name": "Men's Polo T-Shirts",
     "category": "Men's Cotton",
-    "image": "/images/products/mens-polo-tshirts.webp",
+    "image": "/images/products/variants/mens-polo-tshirts-cream.webp",
     "fallback": "/images/essential-tee.svg",
     "label": "Men's Cotton",
     "color": "Sand beige",
@@ -242,7 +284,7 @@ export const products = [
     "id": "heavyweight-tshirts",
     "name": "Heavyweight T-Shirts",
     "category": "Men's Cotton",
-    "image": "/images/products/heavyweight-tshirts.webp",
+    "image": "/images/products/variants/heavyweight-tshirts-cream.webp",
     "fallback": "/images/essential-tee.svg",
     "label": "Men's Cotton",
     "color": "Charcoal",
@@ -268,39 +310,10 @@ export const products = [
     ]
   },
   {
-    "id": "crop-tshirts",
-    "name": "Crop T-Shirts",
-    "category": "Men's Cotton",
-    "image": "/images/products/crop-tshirts.webp",
-    "fallback": "/images/essential-tee.svg",
-    "label": "Men's Cotton",
-    "color": "Dusty rose",
-    "colors": [],
-    "description": "Boxy cropped T-shirt with a modern short hem and roomy sleeves.",
-    "fabric": "Cotton",
-    "specs": {
-      "Fit": "Relaxed / Boxy Crop",
-      "Neckline": "Crew Neck",
-      "Pocket": "No pocket",
-      "Sleeves": "Short Sleeves",
-      "Cuffs & Hem": "Double-stitched cropped hem",
-      "Fabric": "Cotton",
-      "Design": "Solid or Custom Printed",
-      "Colours & Sizes": "Customizable",
-      "Branding": "Private Label Available",
-      "Supply": "Bulk and Wholesale Orders"
-    },
-    "features": [
-      "Relaxed / Boxy Crop fit",
-      "Cotton",
-      "Custom colours, printing & private label"
-    ]
-  },
-  {
     "id": "dryfit-tshirts",
     "name": "Dry-Fit T-Shirts",
     "category": "Men's Activewear",
-    "image": "/images/products/dryfit-tshirts.webp",
+    "image": "/images/products/variants/dryfit-tshirts-cream.webp",
     "fallback": "/images/essential-tee.svg",
     "label": "Men's Activewear",
     "color": "Navy blue",
@@ -329,7 +342,7 @@ export const products = [
     "id": "longsleeve-dryfit-tshirts",
     "name": "Long-Sleeve Dry-Fit T-Shirts",
     "category": "Men's Activewear",
-    "image": "/images/products/longsleeve-dryfit-tshirts.webp",
+    "image": "/images/products/variants/longsleeve-dryfit-tshirts-cream.webp",
     "fallback": "/images/essential-tee.svg",
     "label": "Men's Activewear",
     "color": "Navy blue",
@@ -358,7 +371,7 @@ export const products = [
     "id": "kids-hoodies",
     "name": "Kids' Hoodies",
     "category": "Kids' Clothing",
-    "image": "/images/products/kids-hoodies.webp",
+    "image": "/images/products/variants/kids-hoodies-cream.webp",
     "fallback": "/images/essential-tee.svg",
     "label": "Kids' Clothing",
     "color": "Sky blue",
@@ -387,7 +400,7 @@ export const products = [
     "id": "kids-sweatshirts",
     "name": "Kids' Sweatshirts",
     "category": "Kids' Clothing",
-    "image": "/images/products/kids-sweatshirts.webp",
+    "image": "/images/products/variants/kids-sweatshirts-cream.webp",
     "fallback": "/images/essential-tee.svg",
     "label": "Kids' Clothing",
     "color": "Sky blue",
@@ -416,7 +429,7 @@ export const products = [
     "id": "kids-cotton-tshirts",
     "name": "Kids' Cotton T-Shirts",
     "category": "Kids' Clothing",
-    "image": "/images/products/kids-cotton-tshirts.webp",
+    "image": "/images/products/variants/kids-cotton-tshirts-cream.webp",
     "fallback": "/images/essential-tee.svg",
     "label": "Kids' Clothing",
     "color": "Lavender",
@@ -445,7 +458,7 @@ export const products = [
     "id": "kids-polyester-tshirts",
     "name": "Kids' Polyester T-Shirts",
     "category": "Kids' Clothing",
-    "image": "/images/products/kids-polyester-tshirts.webp",
+    "image": "/images/products/variants/kids-polyester-tshirts-cream.webp",
     "fallback": "/images/essential-tee.svg",
     "label": "Kids' Clothing",
     "color": "Navy blue",
@@ -470,7 +483,164 @@ export const products = [
       "Custom colours, printing & private label"
     ]
   }
-]
+,
+{
+  "id": "womens-pullover-hoodies",
+  "name": "Women's Pullover Hoodies",
+  "category": "Women's Winter",
+  "image": "/images/products/variants/womens-pullover-hoodies-cream.webp",
+  "fallback": "/images/essential-tee.svg",
+  "label": "Women's Winter",
+  "color": "Cream",
+  "colors": [],
+  "description": "A women’s pullover hoodie with a soft relaxed fit, adjustable hood and front kangaroo pocket, ready for custom branding.",
+  "fabric": "To be confirmed",
+  "specs": {
+    "Fit": "Regular or Oversized",
+    "Neckline": "Hooded",
+    "Pocket": "Front Kangaroo Pocket",
+    "Sleeves": "Full Length",
+    "Cuffs & Hem": "Ribbed cuffs & hem",
+    "Fabric": "To be confirmed",
+    "Design": "Solid or Custom Printed",
+    "Colours & Sizes": "Customizable",
+    "Branding": "Private Label Available",
+    "Supply": "Bulk and Wholesale Orders"
+  },
+  "features": [
+    "Regular or Oversized fit",
+    "To be confirmed",
+    "Custom colours, printing & private label"
+  ]
+}
+,
+{
+  "id": "womens-full-zip-hoodies",
+  "name": "Women's Full-Zip Hoodies",
+  "category": "Women's Winter",
+  "image": "/images/products/variants/womens-full-zip-hoodies-cream.webp",
+  "fallback": "/images/essential-tee.svg",
+  "label": "Women's Winter",
+  "color": "Cream",
+  "colors": [],
+  "description": "A versatile women's full-zip hoodie with practical front pockets, comfortable layering and a fitted or relaxed silhouette.",
+  "fabric": "To be confirmed",
+  "specs": {
+    "Fit": "Regular or Relaxed",
+    "Neckline": "Hooded with full-length zipper",
+    "Pocket": "Split front pockets",
+    "Sleeves": "Full Length",
+    "Cuffs & Hem": "Ribbed cuffs & hem",
+    "Fabric": "To be confirmed",
+    "Design": "Solid or Custom Printed",
+    "Colours & Sizes": "Customizable",
+    "Branding": "Private Label Available",
+    "Supply": "Bulk and Wholesale Orders"
+  },
+  "features": [
+    "Regular or Relaxed fit",
+    "To be confirmed",
+    "Custom colours, printing & private label"
+  ]
+}
+,
+{
+  "id": "womens-sweatshirts",
+  "name": "Women's Sweatshirts",
+  "category": "Women's Winter",
+  "image": "/images/products/variants/womens-sweatshirts-cream.webp",
+  "fallback": "/images/essential-tee.svg",
+  "label": "Women's Winter",
+  "color": "Cream",
+  "colors": [],
+  "description": "A soft crewneck women’s sweatshirt with a clean, feminine relaxed silhouette and a classic ribbed finish.",
+  "fabric": "To be confirmed",
+  "specs": {
+    "Fit": "Regular or Relaxed",
+    "Neckline": "Crew Neck",
+    "Pocket": "No pocket",
+    "Sleeves": "Full Length",
+    "Cuffs & Hem": "Ribbed collar, cuffs & hem",
+    "Fabric": "To be confirmed",
+    "Design": "Solid or Custom Printed",
+    "Colours & Sizes": "Customizable",
+    "Branding": "Private Label Available",
+    "Supply": "Bulk and Wholesale Orders"
+  },
+  "features": [
+    "Regular or Relaxed fit",
+    "To be confirmed",
+    "Custom colours, printing & private label"
+  ]
+}
+,
+{
+  "id": "womens-half-zip-sweatshirts",
+  "name": "Women's Half-Zip Sweatshirts",
+  "category": "Women's Winter",
+  "image": "/images/products/variants/womens-half-zip-sweatshirts-cream.webp",
+  "fallback": "/images/essential-tee.svg",
+  "label": "Women's Winter",
+  "color": "Cream",
+  "colors": [],
+  "description": "A women's stand-collar sweatshirt with a short zipper and easy-to-layer styling for modern casual collections.",
+  "fabric": "To be confirmed",
+  "specs": {
+    "Fit": "Regular or Relaxed",
+    "Neckline": "Stand Collar with Half Zip",
+    "Pocket": "No pocket",
+    "Sleeves": "Full Length",
+    "Cuffs & Hem": "Ribbed cuffs & hem",
+    "Fabric": "To be confirmed",
+    "Design": "Solid or Custom Printed",
+    "Colours & Sizes": "Customizable",
+    "Branding": "Private Label Available",
+    "Supply": "Bulk and Wholesale Orders"
+  },
+  "features": [
+    "Regular or Relaxed fit",
+    "To be confirmed",
+    "Custom colours, printing & private label"
+  ]
+}
+,
+{
+  "id": "womens-crop-tshirts",
+  "name": "Women's Crop T-Shirts",
+  "category": "Women's Cotton",
+  "image": "/images/products/variants/womens-crop-tshirts-cream.webp",
+  "fallback": "/images/essential-tee.svg",
+  "label": "Women's Cotton",
+  "color": "Cream",
+  "colors": [],
+  "description": "A cropped women’s crewneck T-shirt with a clean hem and flattering modern silhouette, available for custom prints and private labels.",
+  "fabric": "Cotton (composition to be confirmed)",
+  "specs": {
+    "Fit": "Regular or Relaxed Crop",
+    "Neckline": "Crew Neck",
+    "Pocket": "No pocket",
+    "Sleeves": "Short Sleeves",
+    "Cuffs & Hem": "Double-stitched cropped hem",
+    "Fabric": "Cotton (composition to be confirmed)",
+    "Design": "Solid or Custom Printed",
+    "Colours & Sizes": "Customizable",
+    "Branding": "Private Label Available",
+    "Supply": "Bulk and Wholesale Orders"
+  },
+  "features": [
+    "Regular or Relaxed Crop fit",
+    "Cotton (composition to be confirmed)",
+    "Custom colours, printing & private label"
+  ]
+}
+].map(product => ({
+  ...product,
+  // Mockups represent customisable colour choices, not confirmed stocked inventory.
+  image: `/images/products/variants/${product.id}-cream.webp`,
+  color: "Cream",
+  colors: COLOUR_OPTIONS.map(option => option.name),
+  variants: variantsFor(product),
+}))
 
 export const processSteps = [
   { number: '01', title: 'Share your vision', detail: 'Tell us what you are building, the pieces you love and the story behind your brand.' },

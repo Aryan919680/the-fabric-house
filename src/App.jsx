@@ -35,6 +35,7 @@ function Header({ openEnquiry }) {
   }, [])
   const links = [
     ['Our Collection', '/collections'],
+    ["Women's Wear", '/collections?audience=Women'],
     ['Fabrics', '/#fabrics'],
     ['Our Process', '/process'],
     ['Our Story', '/about'],
@@ -88,42 +89,95 @@ function GarmentImage({ item, className='', loading='lazy' }) {
   return <img loading={loading} src={asset(source)} alt={`${item.name} product mockup, ${item.color || "illustrative colour"}`} className={className} referrerPolicy="no-referrer" onError={() => setAttempt(current => Math.min(current + 1, candidates.length - 1))} />
 }
 
-function ProductGallery({ item }) {
-  const images = productPhotos[item.id] || [{ src: item.image, label: item.color }]
-  const [index, setIndex] = useState(0)
-  useEffect(() => setIndex(0), [item.id])
-  const selected = images[index] || images[0]
-  return <div className="product-gallery">
-    <div className="detail-image">
-      <GarmentImage key={`${item.id}-${index}`} item={{ ...item, image: selected.src, color: selected.label }} className="h-full w-full object-contain p-5" loading="eager" />
-      <span className="product-tag">{item.label}</span>
-      {images.length > 1 && <span className="photo-count">IMAGE {index + 1} / {images.length}</span>}
+function ColourSelector({ variants, selectedId, onSelect, compact = false, name = 'product' }) {
+  return (
+    <div className={`colour-selector ${compact ? 'compact' : ''}`} role="group" aria-label={`Choose a colour for ${name}`}>
+      {variants.map(variant => (
+        <button
+          type="button" key={variant.id}
+          className={`colour-swatch ${variant.id === selectedId ? 'selected' : ''}`}
+          aria-label={`${variant.name}${variant.image ? '' : ' — photo pending'}`}
+          aria-pressed={selectedId === variant.id}
+          title={`${variant.name}${variant.image ? '' : ' — colour photo pending'}`}
+          onClick={() => onSelect(variant.id)}
+        >
+          <span style={{ backgroundColor: variant.hex }} />
+        </button>
+      ))}
     </div>
-    {images.length > 1 && <div className="photo-thumbs" aria-label="Product photos">
-      {images.map((photo, i) => <button key={photo.src} type="button" className={`photo-thumb ${index === i ? 'selected' : ''}`} aria-label={`Show ${photo.label} photo`} aria-pressed={index === i} onClick={() => setIndex(i)}>
-        <GarmentImage item={{ ...item, image: photo.src, color: photo.label }} className="h-full w-full object-contain p-1"/>
-        <span>{photo.label}</span>
-      </button>)}
-    </div>}
-    <p className="photo-caption">AI-generated product mockup · Colours and finished specifications should be confirmed before ordering</p>
-  </div>
+  )
+}
+
+function ProductGallery({ item, selectedVariant, onSelectVariant }) {
+  const photos = item.variants.filter(variant => variant.image)
+  const image = selectedVariant.image || item.image
+  const mockupIsPending = !selectedVariant.image
+  return (
+    <div className="product-gallery">
+      <div className="detail-image">
+        <GarmentImage
+          key={`${item.id}-${selectedVariant.id}`}
+          item={{ ...item, image, color: mockupIsPending ? item.color : selectedVariant.name }}
+          className={`h-full w-full object-contain p-5 ${mockupIsPending ? '' : 'variant-photo'}`}
+          loading="eager"
+        />
+        <span className="product-tag">{item.label}</span>
+        {mockupIsPending && <div className="variant-image-note">{selectedVariant.name} preview pending. Showing the style reference.</div>}
+      </div>
+      {photos.length > 1 && (
+        <div className="photo-thumbs" aria-label="Available colour photographs">
+          {photos.map(variant => (
+            <button
+              type="button" key={variant.id}
+              className={`photo-thumb ${variant.id === selectedVariant.id ? 'selected' : ''}`}
+              aria-label={`Show ${variant.name} mockup`}
+              aria-pressed={variant.id === selectedVariant.id}
+              onClick={() => onSelectVariant(variant.id)}
+            >
+              <img src={asset(variant.image)} alt="" loading="lazy" className="variant-photo h-full w-full object-contain p-1" />
+              <span>{variant.name}</span>
+            </button>
+          ))}
+        </div>
+      )}
+      <p className="photo-caption">AI-generated colour mockups, not photographs of confirmed stock. Final colours and specifications are subject to confirmation.</p>
+    </div>
+  )
 }
 
 function ProductCard({ item, favorites, toggleFavorite, openEnquiry }) {
+  const [colourId, setColourId] = useState('cream')
+  const selected = item.variants.find(variant => variant.id === colourId) || item.variants[0]
   const favorite = favorites.includes(item.id)
+  const href = `#/products/${item.id}?color=${selected.id}`
   return (
     <article className="product-card group">
       <div className="product-visual">
-        <a href={`#/products/${item.id}`} aria-label={`View ${item.name}`} className="block h-full w-full">
-          <GarmentImage item={item} className="h-full w-full object-contain p-3 transition-transform duration-700 group-hover:scale-[1.045]" />
+        <a href={href} aria-label={`View ${item.name} in ${selected.name}`} className="block h-full w-full">
+          <GarmentImage
+            item={{ ...item, image: selected.image || item.image, color: selected.image ? selected.name : item.color }}
+            className={`h-full w-full object-contain p-3 transition-transform duration-700 group-hover:scale-[1.045] ${selected.image ? 'variant-photo' : ''}`}
+          />
         </a>
         <span className="product-tag">{item.label}</span>
         <button className={`heart-button ${favorite ? 'is-favorite' : ''}`} onClick={() => toggleFavorite(item.id)} aria-label={favorite ? `Remove ${item.name} from saved styles` : `Save ${item.name}`} title={favorite ? 'Remove from saved' : 'Save this style'}><Heart size={18} fill={favorite ? 'currentColor' : 'none'}/></button>
-        <button className="product-quick" onClick={() => openEnquiry(item.name)}>Enquire about this style <ArrowUpRight size={16}/></button>
+        <button className="product-quick" onClick={() => openEnquiry(item.name, selected.name)}>Enquire about this style <ArrowUpRight size={16}/></button>
       </div>
-      <div className="flex items-start justify-between gap-2 pt-4">
-        <div><a href={`#/products/${item.id}`} className="font-display text-[23px] leading-tight hover:text-[#aa5a3c]">{item.name}</a><p className="mt-1 text-[12px] text-[var(--muted)]">{item.category}</p><p className="mt-2 line-clamp-2 text-[12px] leading-5 text-[var(--muted)]">{item.description}</p><div className="mt-3 flex flex-wrap gap-2"><span className="mini-spec">{item.fabric}</span><span className="mini-spec">{item.specs.Fit}</span></div></div>
-        <a href={`#/products/${item.id}`} aria-label={`View ${item.name}`} className="mt-1 text-[var(--accent)]"><ArrowUpRight size={19}/></a>
+      <div className="pt-4">
+        <div className="flex items-start justify-between gap-2">
+          <div>
+            <a href={href} className="font-display text-[23px] leading-tight hover:text-[#aa5a3c]">{item.name}</a>
+            <p className="mt-1 text-[12px] text-[var(--muted)]">{item.category}</p>
+          </div>
+          <a href={href} aria-label={`View ${item.name}`} className="mt-1 text-[var(--accent)]"><ArrowUpRight size={19}/></a>
+        </div>
+        <div className="mt-3 flex items-center justify-between gap-2">
+          <ColourSelector variants={item.variants} selectedId={selected.id} onSelect={setColourId} compact name={item.name} />
+          <span className="colour-selected-name">{selected.name}</span>
+        </div>
+        {!selected.image && <p className="mt-1 text-[10px] text-[var(--muted)]">Colour preview unavailable</p>}
+        <p className="mt-3 line-clamp-2 text-[12px] leading-5 text-[var(--muted)]">{item.description}</p>
+        <div className="mt-3 flex flex-wrap gap-2"><span className="mini-spec">{item.fabric}</span><span className="mini-spec">{item.specs.Fit}</span></div>
       </div>
     </article>
   )
@@ -158,8 +212,8 @@ function Home({ favorites, toggleFavorite, openEnquiry }) {
     </div></section>
 
     <section className="section-pad page-wrap" id="collection">
-      <SectionIntro kicker="01 / DISCOVER OUR RANGE" title="Styles made to be" emphasis="your own." desc="15 customizable apparel styles for men and kids — from winter staples to activewear." action="Explore every style" href="/collections"/>
-      <div className="mt-9 grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">
+      <SectionIntro kicker="01 / DISCOVER OUR RANGE" title="Styles made to be" emphasis="your own." desc={`${products.length} customizable apparel styles for men, women and kids — from winter staples to activewear.`} action="Explore every style" href="/collections"/>
+      <div className="mt-9 grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-6 md:gap-5">
         {categories.map((cat, i) => <a key={cat.name} className="category-card group" href={`#/collections?category=${encodeURIComponent(cat.name)}`}>
           <GarmentImage item={cat} className="h-full w-full object-contain p-4 transition-transform duration-700 group-hover:scale-105" />
           <div className="category-shade"/>
@@ -203,47 +257,83 @@ function Collections({ favorites, toggleFavorite, openEnquiry, route }) {
   const params = new URLSearchParams(raw)
   const initialCat = params.get('category') || 'All styles'
   const initialSearch = params.get('search') || ''
+  const initialAudience = params.get('audience') || 'All'
   const [category, setCategory] = useState(initialCat)
   const [search, setSearch] = useState(initialSearch)
+  const [audience, setAudience] = useState(initialAudience)
   const [sort, setSort] = useState('featured')
-  useEffect(() => { setCategory(initialCat); setSearch(initialSearch) }, [initialCat, initialSearch])
-  const allCats = ['All styles', ...new Set(products.map(p => p.category))]
+  useEffect(() => { setCategory(initialCat); setSearch(initialSearch); setAudience(initialAudience) }, [initialCat, initialSearch, initialAudience])
+  const matchesAudience = p => audience === 'All' || (audience === 'Kids' ? p.category.startsWith("Kids'") : p.category.startsWith(`${audience}'s`))
+  const allCats = ['All styles', ...new Set(products.filter(matchesAudience).map(p => p.category))]
   const matches = useMemo(() => {
-    let r = products.filter(p => (category === 'All styles' || p.category === category) && `${p.name} ${p.category} ${p.color} ${p.fabric} ${p.description}`.toLowerCase().includes(search.toLowerCase()))
+    let r = products.filter(p =>
+      (audience === 'All' || (audience === 'Kids' ? p.category.startsWith("Kids'") : p.category.startsWith(`${audience}'s`))) &&
+      (category === 'All styles' || p.category === category) &&
+      `${p.name} ${p.category} ${p.fabric} ${p.description} ${p.colors.join(' ')}`.toLowerCase().includes(search.toLowerCase()))
     if (sort === 'az') r = [...r].sort((a,b) => a.name.localeCompare(b.name))
     return r
-  }, [search, category, sort])
+  }, [search, category, audience, sort])
   return <>
-    <div className="page-wrap page-heading"><p className="eyebrow mb-4">OUR CLOTHING COLLECTION</p><h1 className="page-title">Made for your <em>next idea.</em></h1><p className="copy mt-5 max-w-2xl">Explore 15 clothing styles across men’s winterwear, cotton essentials, activewear and kids’ clothing — with custom branding and wholesale enquiries.</p></div>
+    <div className="page-wrap page-heading"><p className="eyebrow mb-4">OUR CLOTHING COLLECTION</p><h1 className="page-title">Made for your <em>next idea.</em></h1><p className="copy mt-5 max-w-2xl">Explore {products.length} clothing styles across men’s, women’s and kids’ collections — each with four colour options, custom branding and wholesale enquiries.</p></div>
     <section className="page-wrap pb-24">
+      <div className="mb-5 flex flex-wrap gap-2" role="group" aria-label="Shop by audience">
+        {['All','Men','Women','Kids'].map(group => <button
+          key={group} type="button" aria-pressed={audience === group}
+          className={`audience-chip ${audience === group ? 'selected' : ''}`}
+          onClick={() => { setAudience(group); setCategory('All styles') }}
+        >{group === 'All' ? 'All collections' : `${group}'s Wear`}</button>)}
+      </div>
       <div className="catalog-controls">
         <div className="flex flex-wrap gap-2">{allCats.map(cat => <button key={cat} onClick={() => setCategory(cat)} className={`filter-chip ${category===cat ? 'selected' : ''}`}>{cat}</button>)}</div>
         <div className="flex flex-wrap gap-3"><label className="search-field"><Search size={17}/><input aria-label="Search styles" value={search} onChange={e => setSearch(e.target.value)} placeholder="Search styles..." /></label><label className="sort-field"><span className="sr-only">Sort catalogue</span><select value={sort} onChange={e => setSort(e.target.value)}><option value="featured">Featured</option><option value="az">Name A–Z</option></select><ChevronDown size={16}/></label></div>
       </div>
       <div className="mb-5 text-xs text-[var(--muted)]">Showing {matches.length} of {products.length} clothing styles</div>
-      {matches.length ? <div className="grid grid-cols-2 gap-x-3 gap-y-9 md:grid-cols-3 lg:grid-cols-4 md:gap-x-5">{matches.map(item=><ProductCard key={item.id} item={item} favorites={favorites} toggleFavorite={toggleFavorite} openEnquiry={openEnquiry}/>)}</div> : <div className="py-24 text-center"><Search size={34} className="mx-auto mb-4 text-[var(--accent)]"/><h3 className="font-display text-3xl">No matching styles found.</h3><p className="copy my-4">Try a different word or browse all styles.</p><Button onClick={()=>{setSearch('');setCategory('All styles')}}>Reset filters <ArrowRight size={16}/></Button></div>}
+      {matches.length ? <div className="grid grid-cols-2 gap-x-3 gap-y-9 md:grid-cols-3 lg:grid-cols-4 md:gap-x-5">{matches.map(item=><ProductCard key={item.id} item={item} favorites={favorites} toggleFavorite={toggleFavorite} openEnquiry={openEnquiry}/>)}</div> : <div className="py-24 text-center"><Search size={34} className="mx-auto mb-4 text-[var(--accent)]"/><h3 className="font-display text-3xl">No matching styles found.</h3><p className="copy my-4">Try a different word or browse all styles.</p><Button onClick={()=>{setSearch('');setCategory('All styles');setAudience('All')}}>Reset filters <ArrowRight size={16}/></Button></div>}
     </section>
     <LargeCta openEnquiry={openEnquiry}/>
   </>
 }
 
-function ProductDetail({ item, openEnquiry, toggleFavorite, favorites }) {
+function ProductDetail({ item, route, openEnquiry, toggleFavorite, favorites }) {
+  const urlColour = new URLSearchParams(route.split('?')[1] || '').get('color') || 'cream'
+  const [colourId, setColourId] = useState(urlColour)
+  useEffect(() => setColourId(urlColour), [item?.id, urlColour])
   if (!item) return <div className="page-wrap min-h-[55vh] py-24"><h1 className="font-display text-4xl">We couldn't find that style.</h1><a className="text-link mt-5 inline-flex" href="#/collections">Back to collection <ArrowRight size={16}/></a></div>
-  const related = products.filter(p=>p.category===item.category && p.id !== item.id).slice(0,3)
+
+  const selectColour = (id) => {
+    setColourId(id)
+    // Keep shareable product URLs in sync without a scroll-triggering hashchange.
+    window.history.replaceState(window.history.state, '', `#/products/${item.id}?color=${id}`)
+  }
+  const selected = item.variants.find(v => v.id === colourId) || item.variants[0]
+  const related = products.filter(p => p.category === item.category && p.id !== item.id).slice(0, 3)
   return <>
-    <section className="page-wrap pt-7 pb-21"><nav className="mb-6 flex items-center gap-2 text-xs text-[var(--muted)]"><a href="#/collections" className="hover:text-[var(--accent)]">Collection</a><ChevronRight size={13}/><span>{item.category}</span><ChevronRight size={13}/><span className="text-[var(--ink)]">{item.name}</span></nav>
+    <section className="page-wrap pt-7 pb-21">
+      <nav className="mb-6 flex items-center gap-2 text-xs text-[var(--muted)]">
+        <a href="#/collections" className="hover:text-[var(--accent)]">Collection</a>
+        <ChevronRight size={13}/><span>{item.category}</span><ChevronRight size={13}/><span className="text-[var(--ink)]">{item.name}</span>
+      </nav>
       <div className="grid gap-8 lg:grid-cols-[1.08fr_.92fr] lg:gap-16">
-        <ProductGallery item={item} />
-        <div className="py-3 lg:py-10"><p className="eyebrow mb-4">THE FABRIC HOUSE / {item.category.toUpperCase()}</p><h1 className="page-title !text-[clamp(44px,4.6vw,68px)]">{item.name}</h1><p className="mt-5 max-w-xl text-[15px] leading-8 text-[var(--muted)]">{item.description}</p><div className="my-8 h-px bg-[var(--line)]"/>
-          <p className="font-semibold text-sm">Shown colour: <span className="font-normal text-[var(--muted)]">{item.color}</span></p><p className="mt-2 text-xs text-[var(--muted)]">Illustrative imagery only. Colours, sizes, branding and final product specifications are confirmed as part of an enquiry.</p>
+        <ProductGallery item={item} selectedVariant={selected} onSelectVariant={selectColour} />
+        <div className="py-3 lg:py-10">
+          <p className="eyebrow mb-4">THE FABRIC HOUSE / {item.category.toUpperCase()}</p>
+          <h1 className="page-title !text-[clamp(44px,4.6vw,68px)]">{item.name}</h1>
+          <p className="mt-5 max-w-xl text-[15px] leading-8 text-[var(--muted)]">{item.description}</p>
+          <div className="my-8 h-px bg-[var(--line)]"/>
+          <p className="font-semibold text-sm">Choose a colour: <span className="font-normal text-[var(--muted)]">{selected.name}</span></p>
+          <div className="mt-3"><ColourSelector variants={item.variants} selectedId={selected.id} onSelect={selectColour} name={item.name}/></div>
+          {!selected.image && <p className="mt-3 text-xs text-[var(--muted)]">A {selected.name.toLowerCase()} product image is not ready yet; the picture shows the original style reference, not the selected colour.</p>}
           <p className="mt-8 mb-4 font-display text-[26px]">Product specifications</p>
-          <dl className="spec-table">{Object.entries(item.specs).map(([key,value])=><div key={key} className="spec-row"><dt>{key}</dt><dd>{value}</dd></div>)}</dl>
-          <p className="mt-4 text-xs leading-6 text-[var(--muted)]">All photos are AI-generated product mockups. Final colours, fabric and garment details are subject to confirmation when enquiring.</p>
-          <div className="mt-9 flex flex-wrap gap-3"><Button onClick={()=>openEnquiry(item.name)}>Enquire about this style <ArrowUpRight size={17}/></Button><button onClick={()=>toggleFavorite(item.id)} className="btn btn-outline" aria-pressed={favorites.includes(item.id)}><Heart size={17} fill={favorites.includes(item.id)?'currentColor':'none'}/>{favorites.includes(item.id)?'Saved':'Save style'}</button></div>
+          <dl className="spec-table">{Object.entries(item.specs).map(([key, value]) => <div key={key} className="spec-row"><dt>{key}</dt><dd>{value}</dd></div>)}</dl>
+          <p className="mt-4 text-xs leading-6 text-[var(--muted)]">Colour choices represent customisation options rather than confirmed inventory. Final colours, fabric and garment details are subject to confirmation.</p>
+          <div className="mt-9 flex flex-wrap gap-3">
+            <Button onClick={() => openEnquiry(item.name, selected.name)}>Enquire about {selected.name.toLowerCase()} style <ArrowUpRight size={17}/></Button>
+            <button onClick={() => toggleFavorite(item.id)} className="btn btn-outline" aria-pressed={favorites.includes(item.id)}><Heart size={17} fill={favorites.includes(item.id) ? 'currentColor' : 'none'}/>{favorites.includes(item.id) ? 'Saved' : 'Save style'}</button>
+          </div>
         </div>
       </div>
     </section>
-    {related.length>0 && <section className="page-wrap pb-22"><SectionIntro kicker="KEEP EXPLORING" title="More like" emphasis="this."/><div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6">{related.map(p=><ProductCard key={p.id} item={p} favorites={favorites} toggleFavorite={toggleFavorite} openEnquiry={openEnquiry}/>)}</div></section>}
+    {related.length > 0 && <section className="page-wrap pb-22"><SectionIntro kicker="KEEP EXPLORING" title="More like" emphasis="this."/><div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6">{related.map(p => <ProductCard key={p.id} item={p} favorites={favorites} toggleFavorite={toggleFavorite} openEnquiry={openEnquiry}/>)}</div></section>}
     <LargeCta openEnquiry={openEnquiry}/>
   </>
 }
@@ -263,11 +353,11 @@ function Contact({ openEnquiry }) {
     <section className="page-wrap pb-24"><div className="contact-card grid gap-10 lg:grid-cols-[1fr_.9fr] lg:items-center"><div><p className="eyebrow mb-5">START THE CONVERSATION</p><h2 className="font-display text-[clamp(32px,4vw,54px)] leading-tight">Good things start<br/><em>with a conversation.</em></h2><p className="copy mt-6 max-w-xl">Use the enquiry form to prepare your message. This demo lets you copy your enquiry; sending can be connected to your email or backend when you provide the business details.</p><Button className="mt-7" onClick={()=>openEnquiry('')}>Open enquiry form <ArrowUpRight size={17}/></Button></div><div className="contact-art"><GarmentImage item={products[0]} className="h-full w-full object-contain p-5"/><span>MAKE IT YOURS · MADE WITH CARE</span></div></div></section></>
 }
 
-function EnquiryModal({ open, onClose, selectedProduct }) {
-  const [fields, setFields] = useState({ name: '', email: '', company: '', product: '', quantity: '', message: '' })
+function EnquiryModal({ open, onClose, selectedProduct, selectedColour }) {
+  const [fields, setFields] = useState({ name: '', email: '', company: '', product: '', colour: '', quantity: '', message: '' })
   const [summary, setSummary] = useState('')
   const [copied, setCopied] = useState(false)
-  useEffect(() => { if(open) {setFields(f=>({...f,product:selectedProduct || f.product}));setSummary('');setCopied(false)} }, [open, selectedProduct])
+  useEffect(() => { if(open) {setFields(f=>({...f, product:selectedProduct || '', colour:selectedColour || ''}));setSummary('');setCopied(false)} }, [open, selectedProduct, selectedColour])
   useEffect(() => {
     if (!open) return
     const onKey=(e)=>{if(e.key==='Escape')onClose()}
@@ -277,7 +367,7 @@ function EnquiryModal({ open, onClose, selectedProduct }) {
   },[open,onClose])
   if(!open)return null
   const edit=(key,value)=>setFields(f=>({...f,[key]:value}))
-  const submit=(e)=>{e.preventDefault();setSummary(`CLOTHING ENQUIRY — THE FABRIC HOUSE\n\nName: ${fields.name}\nEmail: ${fields.email}\nCompany / Brand: ${fields.company || 'Not supplied'}\nStyle: ${fields.product || 'General enquiry'}\nApproximate quantity: ${fields.quantity || 'Not specified'}\n\nProject details:\n${fields.message}`)}
+  const submit=(e)=>{e.preventDefault();setSummary(`CLOTHING ENQUIRY — THE FABRIC HOUSE\n\nName: ${fields.name}\nEmail: ${fields.email}\nCompany / Brand: ${fields.company || 'Not supplied'}\nStyle: ${fields.product || 'General enquiry'}\nRequested colour: ${fields.colour || 'Not specified'}\nApproximate quantity: ${fields.quantity || 'Not specified'}\n\nProject details:\n${fields.message}`)}
   const copy=async()=>{try{await navigator.clipboard.writeText(summary);setCopied(true)}catch{const el=document.getElementById('enquiry-result');el?.select();document.execCommand('copy');setCopied(true)}}
   return <div className="modal-backdrop" role="presentation" onMouseDown={e=>{if(e.target===e.currentTarget)onClose()}}><div className="modal-panel" role="dialog" aria-modal="true" aria-label="Clothing enquiry" onMouseDown={e=>e.stopPropagation()}>
     <div className="mb-7 flex justify-between items-start"><div><p className="eyebrow mb-3">TELL US ABOUT YOUR IDEA</p><h2 className="font-display text-[38px] leading-tight">Let's make <em>something good.</em></h2></div><button className="icon-button" aria-label="Close enquiry" onClick={onClose}><X size={23}/></button></div>
@@ -287,6 +377,7 @@ function EnquiryModal({ open, onClose, selectedProduct }) {
       <label className="form-label">Company / brand<input className="form-input" value={fields.company} onChange={e=>edit('company',e.target.value)} placeholder="Your brand name"/></label>
       <label className="form-label">Approx. quantity<input className="form-input" value={fields.quantity} onChange={e=>edit('quantity',e.target.value)} placeholder="If known"/></label>
       <label className="form-label col-span-2">Style of interest<select className="form-input" value={fields.product} onChange={e=>edit('product',e.target.value)}><option value="">General enquiry</option>{products.map(p=><option key={p.id} value={p.name}>{p.name}</option>)}</select></label>
+      <label className="form-label col-span-2">Preferred colour<select className="form-input" value={fields.colour} onChange={e => edit('colour', e.target.value)}><option value="">To be discussed</option>{['Red','Black','White','Cream'].map(name => <option value={name} key={name}>{name}</option>)}</select></label>
       <label className="form-label col-span-2">Tell us a little about your project *<textarea className="form-input min-h-29" required value={fields.message} onChange={e=>edit('message',e.target.value)} placeholder="What are you hoping to create?"/></label>
       <div className="col-span-2 pt-2"><button className="btn btn-primary w-full justify-center" type="submit">Prepare my enquiry <ArrowUpRight size={17}/></button><p className="mt-3 text-center text-[11px] text-[var(--muted)]">Demo form — generates a copyable message; does not send it.</p></div>
     </form>}
@@ -305,20 +396,21 @@ export default function App(){
   const [route,setRoute] = useState(routeOf())
   const [quoteOpen,setQuoteOpen] = useState(false)
   const [quoteProduct,setQuoteProduct] = useState('')
+  const [quoteColour,setQuoteColour] = useState('')
   const [favorites,setFavorites] = useState(()=>{try{return JSON.parse(localStorage.getItem('fabric-house:favorites')||'[]')}catch{return []}})
   useEffect(()=>{const onHash=()=>{setRoute(routeOf());window.scrollTo(0,0)};window.addEventListener('hashchange',onHash);return()=>window.removeEventListener('hashchange',onHash)},[])
   useEffect(()=>{try{localStorage.setItem('fabric-house:favorites',JSON.stringify(favorites))}catch{}},[favorites])
-  const openEnquiry=(product='')=>{setQuoteProduct(product);setQuoteOpen(true)}
+  const openEnquiry=(product='', colour='')=>{setQuoteProduct(product);setQuoteColour(colour);setQuoteOpen(true)}
   const closeEnquiry=()=>setQuoteOpen(false)
   const toggleFavorite=(id)=>setFavorites(f=>f.includes(id)?f.filter(x=>x!==id):[...f,id])
   const path=route.split('?')[0]
   const detail=path.startsWith('/products/')?products.find(p=>p.id===path.split('/')[2]):null
   return <><Header openEnquiry={openEnquiry}/><main id="main-content">
     {path==='/collections'?<Collections route={route} favorites={favorites} toggleFavorite={toggleFavorite} openEnquiry={openEnquiry}/>
-    :path.startsWith('/products/')?<ProductDetail item={detail} favorites={favorites} toggleFavorite={toggleFavorite} openEnquiry={openEnquiry}/>
+    :path.startsWith('/products/')?<ProductDetail item={detail} route={route} favorites={favorites} toggleFavorite={toggleFavorite} openEnquiry={openEnquiry}/>
     :path==='/process'?<Process openEnquiry={openEnquiry}/>
     :path==='/about'?<About openEnquiry={openEnquiry}/>
     :path==='/contact'?<Contact openEnquiry={openEnquiry}/>
     :<Home favorites={favorites} toggleFavorite={toggleFavorite} openEnquiry={openEnquiry}/>}
-  </main><Footer openEnquiry={openEnquiry}/><EnquiryModal open={quoteOpen} onClose={closeEnquiry} selectedProduct={quoteProduct}/></>
+  </main><Footer openEnquiry={openEnquiry}/><EnquiryModal open={quoteOpen} onClose={closeEnquiry} selectedProduct={quoteProduct} selectedColour={quoteColour}/></>
 }
